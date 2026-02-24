@@ -3,6 +3,7 @@ package vip.equals.common.collect;
 import org.apache.commons.lang3.StringUtils;
 import vip.equals.common.function.TriConsumer;
 
+import java.math.BigDecimal;
 import java.util.*;
 import java.util.function.*;
 import java.util.stream.Collectors;
@@ -764,6 +765,27 @@ public final class Lists {
             Integer value = getValue.apply(t);
             if (value != null) {
                 total += value;
+            }
+        }
+        return total;
+    }
+
+    /**
+     * 对象中某个BigDecimal属性值的总和
+     *
+     * @param list     列表
+     * @param getValue 获取BigDecimal值
+     * @return 总和
+     */
+    public static <T> BigDecimal bigDecimalSum(List<T> list, Function<T, BigDecimal> getValue) {
+        if (list == null || list.isEmpty()) {
+            return BigDecimal.ZERO;
+        }
+        BigDecimal total = BigDecimal.ZERO;
+        for (T t : list) {
+            BigDecimal value = getValue.apply(t);
+            if (value != null) {
+                total = total.add(value);
             }
         }
         return total;
